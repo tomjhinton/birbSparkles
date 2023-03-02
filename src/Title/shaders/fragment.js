@@ -5,7 +5,7 @@ uniform vec3 uMousePosition;
 varying vec3 pos;
 uniform float u_progress;
 
-
+uniform float sparkles;
 
 
   
@@ -81,6 +81,15 @@ void main(){
 
   float distance = length(uMousePosition - pos);
   float squishFactor = smoothstep(0.0, 1., 1.0 - distance);
+
+  if(sparkles == 0.){
+    color = vec3(0., 1., 0.);
+  }
+
+  if(sparkles == 0.5){
+    uv = fract(uv * 10.);
+    color = vec3(0., step(uv.x, .4), 1.);
+  }
   // color = mix(color, vec3(uv.x, uv.y, 1.), squishFactor *( (sin(u_progress) +1.) * .5) * 1.5 );
 
   // color -= 1. -pos.z;

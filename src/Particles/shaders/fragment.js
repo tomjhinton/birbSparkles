@@ -5,6 +5,7 @@ uniform vec2 uResolution;
 varying vec3 pos;
 const float PI = 3.1415926535897932384626433832795;
 
+const float TAU = PI * 2.;
 
   
 vec2 rotate2D (vec2 _st, float _angle) {
@@ -57,6 +58,23 @@ vec3 shape( in vec2 p, float sides ,float size)
   return  vec3(1.0-smoothstep(size,size +.1,d));
 }
 
+float stroke(float x, float s, float w){
+  float d = step(s, x+ w * .5) - step(s, x - w * .5);
+  return clamp(d, 0., 1.);
+}
+  
+
+float star(vec2 st, int V, float s) {
+  st = st*4.-2.;
+  float a = atan(st.y, st.x)/TAU;
+  float seg = a * float(V);
+  a = ((floor(seg) + 0.5)/float(V) + 
+      mix(s,-s,step(.5,fract(seg)))) 
+      * TAU;
+  return abs(dot(vec2(cos(a),sin(a)),
+                 st));
+}
+
 
 void main() {
   vec2 uv = vUv;
@@ -76,7 +94,7 @@ void main() {
 
      float t = (uTime *.4) + length(coOrd-.5);
 
-     coOrd = rotate2D(coOrd, PI + t);
+    //  coOrd = rotate2D(coOrd, PI + t);
 
     //  uvRipple(uv, .5);
 
@@ -84,9 +102,9 @@ void main() {
         coswarp(color, 3.);
         coswarp(color, 3.);
 
-        color = mix(color, vec3(1.), step(shape(coOrd, 13., .3).r, .5));
+        color = mix(color, vec3(1.), step(shape(coOrd, 3., .3).r, .5));
 
-        color = mix(color, vec3(1.), step(shape(coOrd, 13., .15).r, .5));
+        color = mix(color, vec3(1.), step(shape(coOrd, 3., .15).r, .5));
 
       
 
@@ -95,7 +113,11 @@ void main() {
       // color = mix(color, color2, .5);
 
         float distanceToCenter = distance(coOrd, vec2(.5));
-        alpha = 1.- step(shape(coOrd, 13., .5).r, .5);
+        alpha = 1.- step(shape(coOrd, 5., .5).r, .5);
+
+        alpha = stroke(star(coOrd,  6, .09), .5, .5);
+
+        // alpha =  star(coOrd, .4, .02);
         
       //  if(pos.z <0.1){
       //    alpha = 0.;

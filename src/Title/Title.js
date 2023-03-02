@@ -22,7 +22,8 @@ export default function Title(props){
           uSquishStrength: 0,
           uMousePosition: [0, 0, 0],
           u_progress: 0,
-          lightDirection:  new THREE.Vector3(0.0, 0.0, 3.0).normalize() 
+          lightDirection:  new THREE.Vector3(0.0, 0.0, 3.0).normalize(),
+          sparkles:0 
         },
         vertexShader,
         fragmentShader
@@ -45,7 +46,20 @@ export default function Title(props){
     const titleMaterial = useRef()
     useFrame((state, delta) => {
         titleMaterial.current.uTime += delta
-    })
+
+        if(props.sparkly === "Not"){
+          titleMaterial.current.sparkles = 0
+        }
+
+        if(props.sparkly === "Slightly"){
+          titleMaterial.current.sparkles = 0.5
+        }
+
+        if(props.sparkly === "Full"){
+          titleMaterial.current.sparkles = 1.
+        }
+
+      })
     
 
     const handleMouseDown = (event) => {

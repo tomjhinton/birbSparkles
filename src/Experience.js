@@ -20,7 +20,7 @@ export default function Experience(){
 
     return <>
     <OrbitControls makeDefault enableZoom={true} maxPolarAngle={Math.PI * .5} sparkly={sparkly}/>
-      <Title sparkly/>
+      <Title sparkly={sparkly}/>
       {sparkly == "Full" && <Particles sparkly={sparkly}/>}
       <Sparkles sparkly={sparkly}/>
       <Radio  sparkly={sparkly} setSparkly={setSparkly}/>
