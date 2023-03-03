@@ -2,6 +2,9 @@ export default /* glsl */`uniform float uTime;
 
 varying vec2 vUv;
 uniform vec2 uResolution;
+const float PI = 3.1415926535897932384626433832795;
+
+const float TAU = PI * 2.;
 
 
 
@@ -34,6 +37,23 @@ vec2 p = uv -.5;
 
 } 
 
+float stroke(float x, float s, float w){
+    float d = step(s, x+ w * .5) - step(s, x - w * .5);
+    return clamp(d, 0., 1.);
+  }
+    
+  
+  float star(vec2 st, int V, float s) {
+    st = st*4.-2.;
+    float a = atan(st.y, st.x)/TAU;
+    float seg = a * float(V);
+    a = ((floor(seg) + 0.5)/float(V) + 
+        mix(s,-s,step(.5,fract(seg)))) 
+        * TAU;
+    return abs(dot(vec2(cos(a),sin(a)),
+                   st));
+  }
+  
 
 
 
@@ -42,11 +62,13 @@ void main() {
   vec2 uv2 = (gl_FragCoord.xy - uResolution * .5) / uResolution.yy + 0.5;
 
 
-  float t = (uTime * .2) + length(uv-.5);
+  float t = (uTime * 2.) + uv.x;
   
   uv = fract( uv * 200.);
  
- vec3 color = vec3(0.9725, 0.9608, 0.9157);
+ vec3  color = vec3(0.90725, 0.9108, 0.9857);
+
+ color += sin(t);
 
 //  color = vec3(uv.x, uv.y, 1.);
 
@@ -57,7 +79,8 @@ void main() {
   
  
 
-      alpha = step(length(uv -.5), .2 * sin(t));
+    //   alpha = step(length(uv -.5), .2 * sin(t));
+      alpha = stroke(star(uv,  6, .09), .3, .3);
 
     //   alpha = 0;
 

@@ -53,7 +53,7 @@ void coswarp(inout vec3 trip, float warpsScale ){
     //   cos((uTime * .4) + length(modelPosition.xy))
     // );
     // // gl_PointSize = (120. * ((sin(uTime) + length(modelPosition2.xy) +1. ) *.5)  )  * 1. * 1.;
-    gl_PointSize = (50. )  * 1. * 1.;
+    gl_PointSize = (25. * length(modelPosition2.xy) )  * 1. * 1.;
       // gl_PointSize =( 10000. * sin(uTime * .2)) ;
     // gl_PointSize = (50. * ((cos(uTime) + length(modelPosition.xy) +1. ) *.5)  )  * 1. * 1.;
     gl_PointSize *= (1.0/ -viewPosition.z);
