@@ -5,6 +5,11 @@ uniform float uTime;
 attribute vec3 position2;
 varying vec3 pos;
 
+varying vec3 Normal;
+varying vec3 Position;
+#include <common>
+#include <skinning_pars_vertex>
+
 void coswarp(inout vec3 trip, float warpsScale ){
 
     trip.xyz += warpsScale * .1 * cos(3. * trip.yzx + (uTime * .015));
@@ -26,6 +31,12 @@ void coswarp(inout vec3 trip, float warpsScale ){
     
 
   void main(){
+    #include <skinbase_vertex>
+    #include <begin_vertex>
+    #include <beginnormal_vertex>
+    #include <defaultnormal_vertex>
+    #include <skinning_vertex>
+    #include <project_vertex>
     vec4 modelPosition = modelMatrix * vec4(position, 1.);
 
 
@@ -45,7 +56,9 @@ void coswarp(inout vec3 trip, float warpsScale ){
     vec4 viewPosition = viewMatrix * modelPosition;
     vec4 projectionPosition = projectionMatrix * viewPosition;
   
-    gl_Position = projectionPosition;
+    Normal = normalize(normalMatrix * normal);
+    Position = vec3(modelViewMatrix * vec4(position, 1.0));
+    gl_Position = projectionMatrix * mvPosition;
     
     // gl_PointSize = mix( 
     //   (15. * ((sin(uTime * .2) + length(modelPosition2.xy) +1. ) *.5)  )  * 1. * 1.,

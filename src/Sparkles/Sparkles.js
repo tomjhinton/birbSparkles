@@ -104,21 +104,38 @@ const pointMaterial = useRef()
 const animations1 = useAnimations(animations, model.scene)
 
 
-const animationActions = useAnimations(animations, group.current);
 
 useEffect(() => {
     let sparklyAction
 
   if (props.sparkly === 'Full') {
+      console.log(raph)
      sparklyAction = animations1.actions['metarigAction'];
     sparklyAction.reset().fadeIn(0.5).play();
-    sparklyAction.setEffectiveWeight(1);
+    // sparklyAction.setEffectiveWeight(1);
+   
   } else {
-    console.log(animations1)
+    // console.log(animations1)
      sparklyAction = animations1.actions['stand'];
     sparklyAction.reset().fadeIn(0.5).play();
     sparklyAction.setEffectiveWeight(1);
+    
   }
+
+  return () => {
+    // sparklyAction.setTime(sparklyAction.getClip().duration)
+    sparklyAction.reset()
+ console.log(sparklyAction.getMixer())
+ let mixer = sparklyAction.getMixer()
+ console.log(group)
+//  mixer.uncacheAction(sparklyAction)
+
+ mixer.stopAllAction( )
+
+
+}
+
+
 }, [props.sparkly]);
 
     return(
