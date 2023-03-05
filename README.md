@@ -40,7 +40,7 @@
 
 - Now I'll just switch back to slightly sparkly.
 - And now the model is paused in the wrong position. 
-- This means the point cloud version does'nt line up.
+- This means the point cloud version doesn't line up.
 - I do not know why. 
 - Might be a problem with the model.
 - Might be an issue with my usage of animation mixer.
@@ -53,5 +53,5 @@
 - Stars/sparkles are from the [Pixel Spirt Deck](https://pixelspiritdeck.com/)
 - Need a json version of the font for the title. [Used this](https://gero3.github.io/facetype.js/)
 - Very much lost control of my point numbering system.
-- Should have also planned what I'd right here.
+- Should have also planned what I'd write here.
 
